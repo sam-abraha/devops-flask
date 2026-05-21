@@ -36,3 +36,25 @@ jobs:
       - name: Push Docker image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/devops-app:latest
+
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: root
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/devops-app:latest
+
+            docker stop devops-app || true
+            docker rm devops-app || true
+
+            docker run -d -p 5000:5000 \
+              --name devops-app \
+              ${{ secrets.DOCKER_USERNAME }}/devops-app:latest
