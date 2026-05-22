@@ -56,5 +56,6 @@ jobs:
             docker rm devops-app || true
 
             docker run -d -p 5000:5000 \
+              --restart always \
               --name devops-app \
               ${{ secrets.DOCKER_USERNAME }}/devops-app:latest
