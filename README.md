@@ -1,12 +1,14 @@
 # DevOps CI/CD Flask Application
 
-A production-style DevOps project demonstrating a complete CI/CD workflow using Flask, Docker, GitHub Actions, Nginx, and VPS deployment.
+A production-style DevOps project demonstrating a complete CI/CD workflow using Flask, Docker, GitHub Actions, Nginx, VPS deployment, Prometheus and Grafana.
 
 The application automatically runs tests, builds Docker images, pushes them to Docker Hub, and deploys updates to a live VPS environment through an automated CI/CD pipeline.
 
 ---
 
 # Live Demo
+
+Production Deployment:
 
 🌍 https://velvetclouds.de
 
@@ -40,6 +42,9 @@ It demonstrates how modern applications are:
 - Nginx Reverse Proxy
 - HTTPS with Let's Encrypt SSL
 - Live Production Deployment
+- Prometheus Metrics Collection
+- Grafana Monitoring Dashboard
+- Container-to-Container Networking
 
 ---
 
@@ -48,7 +53,7 @@ It demonstrates how modern applications are:
 | Method | Endpoint | Description |
 |---|---|---|
 | GET | `/` | Returns application message |
-| GET | `/health` | Returns health status |
+| GET | `/metrics` | Exposes Prometheus metrics |
 
 ---
 
@@ -72,3 +77,28 @@ Docker Container Restart
 Nginx Reverse Proxy
    ↓
 HTTPS Domain
+```
+---
+
+# Monitoring & Observability
+
+The project includes a monitoring stack using Prometheus and Grafana.
+
+Prometheus scrapes application metrics from the Flask `/metrics` endpoint, while Grafana visualizes system and application performance metrics such as:
+
+- total HTTP requests
+- request rate
+- request latency
+- CPU usage
+- memory consumption
+
+# Monitoring Architecture
+
+```text
+Flask App
+   ↓ exposes /metrics
+Prometheus
+   ↓ scrapes metrics
+Grafana
+   ↓ visualizes dashboards
+```
