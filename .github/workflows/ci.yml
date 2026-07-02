@@ -61,8 +61,8 @@ jobs:
 
             git pull origin main
 
-            docker compose -p devops-flask-lab -f monitoring/docker-compose.yml pull
-            
-            docker compose -p devops-flask-lab -f monitoring/docker-compose.yml up -d
+            docker-compose -p devops-flask-lab -f monitoring/docker-compose.yml pull
+
+            docker-compose -p devops-flask-lab -f monitoring/docker-compose.yml up -d
 
     
