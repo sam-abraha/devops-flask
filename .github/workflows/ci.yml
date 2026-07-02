@@ -57,12 +57,12 @@ jobs:
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/devops-app:latest
 
-            docker stop devops-app || true
-            docker rm devops-app || true
+            cd /opt/devops-flask
 
-            docker run -d -p 5000:5000 \
-              --restart always \
-              --name devops-app \
-              ${{ secrets.DOCKER_USERNAME }}/devops-app:latest
+            git pull origin main
+
+            docker compose -p devops-flask-lab -f monitoring/docker-compose.yml pull
+            
+            docker compose -p devops-flask-lab -f monitoring/docker-compose.yml up -d
 
     
