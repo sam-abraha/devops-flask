@@ -55,17 +55,18 @@ jobs:
           username: root
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/devops-app:latest
 
             cd /opt/devops-flask
 
             git pull origin main
 
-            docker-compose -f monitoring/docker-compose.yml down
-
             docker pull ${{ secrets.DOCKER_USERNAME }}/devops-app:latest
             docker tag ${{ secrets.DOCKER_USERNAME }}/devops-app:latest devops-app:latest
 
+            docker-compose -p devops-flask-lab -f monitoring/docker-compose.yml down
+
+            rm -f flask-app || true
+            
             docker-compose -p devops-flask-lab -f monitoring/docker-compose.yml up -d
 
     
