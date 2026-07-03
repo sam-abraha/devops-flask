@@ -1,0 +1,20 @@
+groups:
+  - name: devops-flask-app-alerts
+    rules:
+      - alert: FlaskAppDown
+        expr: up{job="flask-app"} == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Flask app is down"
+          description: "Prometheus cannot scrape the Flask app"
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 0.85
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage"
+          description: "VPS memory usage is above 85%"
