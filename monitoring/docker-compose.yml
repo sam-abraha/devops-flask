@@ -72,5 +72,5 @@ services:
     command: -config.file=/etc/promtail/config.yml
     restart: always
 
-  volumes:
-    grafana_data:
+volumes:
+  grafana_data:
